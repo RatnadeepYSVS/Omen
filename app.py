@@ -3,7 +3,7 @@ from tkinter import ttk
 from random import sample,randint
 from ctypes import windll
 from twilio.rest import Client
-from secure import acc,ph,tok
+from secure import acc,ph,tok#PLease Create Your Twilio ACCOUNT for AccessKey,Token,Trial PhoneNum.
 try:
     windll.shcore.SetProcessDpiAwareness(1)
 except:
