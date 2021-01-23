@@ -11,7 +11,7 @@ except:
 k=["1","2","3","4",'5','6',"7",'8','9','0']
 l=randint(3,6)
 root = tk.Tk()
-root.title("Otp Checker")
+root.title("OMEN-Otp Checker")
 otp_value = tk.StringVar()
 stat_value = tk.StringVar()
 k=["1","2","3","4",'5','6',"7",'8','9','0']
