@@ -12,14 +12,19 @@ except:
 k=["1","2","3","4",'5','6',"7",'8','9','0']
 l=randint(3,6)
 root = tk.Tk()
-root.title("OMEN-OTP Checker For Twilio.")
+root.title("OMEN-OTP Generator And Validator Tool.")
 ph_value=tk.StringVar()
 otp_value = tk.StringVar()
 stat_value = tk.StringVar()
-k=["1","2","3","4",'5','6',"7",'8','9','0']
-l=randint(3,6)
-otp=''.join(sample(k,l))
+otp=''
+def gen():
+    k=["1","2","3","4",'5','6',"7",'8','9','0']
+    l=randint(3,6)
+    otp=''.join(sample(k,l))
+    return otp
 def sender():
+    global otp
+    otp=gen()
     try:
         cli=Client(acc,tok)
         sms=cli.messages.create(
@@ -30,9 +35,11 @@ def sender():
         stat_value.set('Invalid Phone Number.')
         
 def check_stats():
-    stat_value.set('')
-    if otp_value.get()==otp:
-        stat_value.set(f"Access Granted")
+    global otp
+    if ph_value.get()=='':
+        stat_value.set('Please enter valid Phone Num.')
+    elif otp_value.get()==otp:
+        stat_value.set('Access Granted.')
     else:
         stat_value.set('Wrong Otp,Please Check Again.')
 def create_account():
