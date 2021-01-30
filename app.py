@@ -3,6 +3,8 @@ from tkinter import ttk
 from random import sample,randint
 from ctypes import windll
 from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
+from requests.exceptions import ConnectionError
 from secure import acc,ph,tok
 import webbrowser
 try:
@@ -31,25 +33,23 @@ def sender():
             body=otp,
             from_=ph,
             to=f'+91{ph_value.get()}')
-    except Exception:
+    except TwilioRestException:
         stat_value.set('Invalid Phone Number.')
-        
+    except ConnectionError:
+        stat_value.set('Check Your Internet Connection.And Retry.')
 def check_stats():
     global otp
-    if ph_value.get()=='':
-        stat_value.set('Please enter valid Phone Num.')
+    if otp_value.get()=='':
+        stat_value.set('Please enter Valid OTP.')
     elif otp_value.get()==otp:
         stat_value.set('Access Granted.')
     else:
         stat_value.set('Wrong Otp,Please Check Again.')
 def create_account():
     webbrowser.open('https://www.twilio.com/try-twilio')
-
 main = ttk.Frame(root, padding=(30, 15))
 main.grid()
-
 root.columnconfigure(0, weight=1)
-
 ph_label = ttk.Label(main, text="Phone:-")
 ph_input = ttk.Entry(main, width=10, textvariable=ph_value)
 otp_label = ttk.Label(main, text="Enter Otp:")
@@ -64,13 +64,10 @@ ph_input.grid(column=1, row=0, sticky="EW", padx=15, pady=5)
 otp_label.grid(column=0, row=1, sticky="W", padx=5, pady=5)
 otp_input.grid(column=1, row=1, sticky="EW", padx=25, pady=5)
 ph_input.focus()
-
 stat_label.grid(column=0, row=2, sticky="W", padx=5, pady=5)
 stat_display.grid(column=1, row=2, sticky="EW", padx=5, pady=5)
-
 check_button.grid(column=0, row=3, columnspan=2, sticky="EW", padx=5, pady=5)
 resend_button.grid(column=0, row=4, columnspan=2, sticky="EW", padx=5, pady=5)
 create_acc_button.grid(column=0, row=5, columnspan=2, sticky="EW", padx=5, pady=5)
-
 root.geometry("500x300")
 root.mainloop()
